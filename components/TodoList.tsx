@@ -9,6 +9,7 @@ export default function TodoList({ session }: { session: Session }) {
   const [todos, setTodos] = useState<Todos[]>([])
   const [newTaskText, setNewTaskText] = useState('')
   const [errorText, setErrorText] = useState('')
+  const [newDueDate, setNewDueDate] = useState('')
 
   const user = session.user
 
@@ -74,16 +75,18 @@ export default function TodoList({ session }: { session: Session }) {
             setNewTaskText(e.target.value)
           }}
         />
+        
         <input
           className="rounded w-full p-2"
           type="date"
-          placeholder=""
-          value={newTaskText}
+          placeholder="set due date"
+          value={newDueDate}
           onChange={(e) => {
             setErrorText('')
-            setNewTaskText(e.target.value)
+            setNewDueDate(e.target.value)
           }}
         />
+
         <button className="btn-black" type="submit">
           Add
         </button>
@@ -124,7 +127,7 @@ const Todo = ({ todo, onDelete }: { todo: Todos; onDelete: () => void }) => {
     <li className="w-full block cursor-pointer hover:bg-200 focus:outline-none focus:bg-200 transition duration-150 ease-in-out">
       <div className="flex items-center px-4 py-4 sm:px-6">
         <div className="min-w-0 flex-1 flex items-center">
-          <div className="text-sm leading-5 font-medium truncate">{todo.task}</div>
+          <div className="text-sm leading-5 font-medium truncate">{todo.task} : {todo.due_date?.toString()}</div>
         </div>
         <div>
           <input

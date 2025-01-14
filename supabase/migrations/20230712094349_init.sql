@@ -4,6 +4,7 @@ create table todos (
   task text check (char_length(task) > 3),
   is_complete boolean default false,
   inserted_at timestamp with time zone default timezone('utc'::text, now()) not null
+  due_date date default null
 );
 alter table todos enable row level security;
 create policy "Individuals can create todos." on todos for

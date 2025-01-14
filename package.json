@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
+    "supabase": "^2.6.8",
     "tailwindcss": "^3.2.7"
   }
 }

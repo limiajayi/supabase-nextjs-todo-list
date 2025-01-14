@@ -5,6 +5,7 @@ export type Json =
   | null
   | { [key: string]: Json }
   | Json[]
+  | Date
 
 export interface Database {
   public: {
@@ -16,6 +17,7 @@ export interface Database {
           is_complete: boolean | null
           task: string | null
           user_id: string
+          due_date: Date | null
         }
         Insert: {
           id?: number
@@ -23,6 +25,7 @@ export interface Database {
           is_complete?: boolean | null
           task?: string | null
           user_id: string
+          due_date?: Date | null
         }
         Update: {
           id?: number
@@ -30,6 +33,7 @@ export interface Database {
           is_complete?: boolean | null
           task?: string | null
           user_id?: string
+          due_date?: Date | null
         }
       }
     }

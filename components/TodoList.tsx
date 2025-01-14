@@ -31,7 +31,7 @@ export default function TodoList({ session }: { session: Session }) {
     if (task.length) {
       const { data: todo, error } = await supabase
         .from('todos')
-        .insert({ task, user_id: user.id })
+        .insert({ task, user_id: user.id})
         .select()
         .single()
 
@@ -56,6 +56,7 @@ export default function TodoList({ session }: { session: Session }) {
   return (
     <div className="w-full">
       <h1 className="mb-12">Todo List.</h1>
+      <p>Add the task name and the due date</p>
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -67,6 +68,16 @@ export default function TodoList({ session }: { session: Session }) {
           className="rounded w-full p-2"
           type="text"
           placeholder="make coffee"
+          value={newTaskText}
+          onChange={(e) => {
+            setErrorText('')
+            setNewTaskText(e.target.value)
+          }}
+        />
+        <input
+          className="rounded w-full p-2"
+          type="date"
+          placeholder=""
           value={newTaskText}
           onChange={(e) => {
             setErrorText('')

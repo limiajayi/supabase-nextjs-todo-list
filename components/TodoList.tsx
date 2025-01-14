@@ -12,6 +12,7 @@ export default function TodoList({ session }: { session: Session }) {
   const [newDueDate, setNewDueDate] = useState('')
 
   const user = session.user
+  //const userExists = todos.find()
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -27,12 +28,12 @@ export default function TodoList({ session }: { session: Session }) {
     fetchTodos()
   }, [supabase])
 
-  const addTodo = async (taskText: string) => {
+  const addTodo = async (taskText: string, dateText: string) => {
     let task = taskText.trim()
     if (task.length) {
       const { data: todo, error } = await supabase
         .from('todos')
-        .insert({ task, user_id: user.id, due_date: new Date})
+        .insert({ task, user_id: user.id, due_date: new Date(dateText)})
         .select()
         .single()
 
@@ -57,11 +58,11 @@ export default function TodoList({ session }: { session: Session }) {
   return (
     <div className="w-full">
       <h1 className="mb-12">Todo List.</h1>
-      <p>Add the task name and the due date</p>
+      <p className="font-medium text-gray-600">Add the task name and the due date</p>
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          addTodo(newTaskText)
+          addTodo(newTaskText, newDueDate)
         }}
         className="flex gap-2 my-2"
       >
@@ -127,7 +128,10 @@ const Todo = ({ todo, onDelete }: { todo: Todos; onDelete: () => void }) => {
     <li className="w-full block cursor-pointer hover:bg-200 focus:outline-none focus:bg-200 transition duration-150 ease-in-out">
       <div className="flex items-center px-4 py-4 sm:px-6">
         <div className="min-w-0 flex-1 flex items-center">
-          <div className="text-sm leading-5 font-medium truncate">{todo.task} - {todo.due_date?.toString()}</div>
+          <div className="text-sm leading-5 font-medium truncate">{todo.task}</div>
+        </div>
+        <div className="min-w-0 flex-1 flex items-center">
+          <div className="text-sm leading-5 font-medium truncate">{todo.due_date?.toString()}</div>
         </div>
         <div>
           <input

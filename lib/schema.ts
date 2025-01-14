@@ -6,6 +6,7 @@ export type Json =
   | { [key: string]: Json }
   | Json[]
   | Date
+  | string
 
 export interface Database {
   public: {
@@ -18,6 +19,7 @@ export interface Database {
           task: string | null
           user_id: string
           due_date: Date | null
+          username: string
         }
         Insert: {
           id?: number

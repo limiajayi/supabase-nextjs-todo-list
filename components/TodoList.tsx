@@ -12,7 +12,6 @@ export default function TodoList({ session }: { session: Session }) {
   const [newDueDate, setNewDueDate] = useState('')
 
   const user = session.user
-  //const userExists = todos.find()
 
   useEffect(() => {
     const fetchTodos = async () => {

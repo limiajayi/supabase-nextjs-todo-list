@@ -2,6 +2,15 @@ import Head from 'next/head'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
 import TodoList from '@/components/TodoList'
+import { Database } from '@/lib/schema'
+import { useEffect, useState } from 'react'
+
+
+import { createClient } from '@supabase/supabase-js'
+const supabaseUrl = 'https://ovfpegxizzlacduxfgqj.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im92ZnBlZ3hpenpsYWNkdXhmZ3FqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY4NTI4MzAsImV4cCI6MjA1MjQyODgzMH0.nPYEjDGcWrzS9eWY1IuO-UacvnIr_DXuV2cVrugMXb8'
+const supabase = createClient(supabaseUrl, supabaseKey)
+          
 
 export default function Home() {
   const session = useSession()
@@ -23,7 +32,16 @@ export default function Home() {
                 <span className="font-sans text-4xl text-center pb-2 mb-1 border-b mx-4 align-center">
                   Login
                 </span>
+
+                <form method="get">
+
+                <p className="font-small text-gray-500">Username</p>
+                <input id="username" className="rounded w-full p-2 border-black" type="text" placeholder="enter username"/>
+
                 <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} theme="dark" />
+
+                </form>
+                
               </div>
             </div>
           </div>
@@ -48,3 +66,18 @@ export default function Home() {
     </>
   )
 }
+
+
+const addToUsers = async (userText: string) => {
+
+  const { data, error } = await supabase
+  .from('users')
+  .insert([
+    { username: userText },
+  ])
+  .select()
+
+}
+
+let value = document.querySelectorAll('input')[0].value;
+addToUsers(value);
